@@ -12,16 +12,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Mobdeve.db";
-    public static final String MARKER_TABLE_NAME = "markers";
-    public static final String MARKER_COLUMN_ID = "id";
-    public static final String MARKER_NAME = "name";
-    public static final String MARKER_NOTES = "notes";
-    public static final String MARKER_LAT = "latitude";
-    public static final String MARKER_LNG = "longtitude";
+//    public static final String MARKER_TABLE_NAME = "markers";
+//    public static final String MARKER_COLUMN_ID = "id";
+//    public static final String MARKER_NAME = "name";
+//    public static final String MARKER_NOTES = "notes";
+//    public static final String MARKER_LAT = "latitude";
+//    public static final String MARKER_LNG = "longtitude";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
