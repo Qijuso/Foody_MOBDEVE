@@ -14,8 +14,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Mobdeve.db";
-//    public static final String MARKER_TABLE_NAME = "markers";
-//    public static final String MARKER_COLUMN_ID = "id";
+    public static final String MARKER_TABLE_NAME = "markers";
+    public static final String MARKER_COLUMN_ID = "id";
 //    public static final String MARKER_NAME = "name";
 //    public static final String MARKER_NOTES = "notes";
 //    public static final String MARKER_LAT = "latitude";
@@ -43,6 +43,11 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("latitude", lat);
         contentValues.put("longtitude", lng);
         db.insert("markers", null, contentValues);
+    }
+
+    public void deleteMarker(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(MARKER_TABLE_NAME, MARKER_COLUMN_ID + "=" + id, null);
     }
 
     public void getAllMarkers(GoogleMap googleMap) {

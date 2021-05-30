@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void deleteMarker(Marker marker) {
+        mysqldb.deleteMarker((int)marker.getTag());
         marker.remove();
     }
 
