@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Foody</string>
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="notes">Notes</string>
 </resources>
