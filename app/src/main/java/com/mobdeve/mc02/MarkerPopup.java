@@ -40,9 +40,10 @@ public class MarkerPopup extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.layout_markerpopup, null);
         inputTextName = view.findViewById(R.id.textInput_Name);
         inputTextNotes = view.findViewById(R.id.textInput_Notes);
+        String title = "Marker Information ";
         if (isNew) {
             builder.setView(view)
-                    .setTitle("Marker Information")
+                    .setTitle(title)
                     .setNeutralButton("Cancel", (dialog, which) -> listener.cancelPopup())
                     .setPositiveButton("Save", (dialog, which) -> {
                         String name = inputTextName.getText().toString();
@@ -53,7 +54,7 @@ public class MarkerPopup extends AppCompatDialogFragment {
             inputTextName.setText(selectedMarker.getTitle());
             inputTextNotes.setText(selectedMarker.getSnippet());
             builder.setView(view)
-                    .setTitle("Marker Information")
+                    .setTitle(title)
                     .setNeutralButton("Cancel", (dialog, which) -> listener.cancelPopup())
                     .setNegativeButton("Delete", (dialog, which) -> listener.deleteMarker(selectedMarker))
                     .setPositiveButton("Save", (dialog, which) -> {

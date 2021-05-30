@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Location lastKnownLocation;
     private LatLng tempPoint;
 
+    private DBHelper mysqldb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +53,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
+        mysqldb = new DBHelper(this);
+
     }
 
     @Override
     public void applyNewInfo(String name, String notes) {
         mMap.addMarker(new MarkerOptions().position(tempPoint).title(name).snippet(notes));
+        mysqldb.insertMarker(name, notes, tempPoint.latitude, tempPoint.longitude);
     }
 
     @Override
@@ -103,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         updateLocationUI();
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+        mysqldb.getAllMarkers(mMap);
     }
 
     /**
