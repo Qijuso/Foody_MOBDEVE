@@ -10,6 +10,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Location lastKnownLocation;
     private LatLng tempPoint;
 
+    SearchView search;
     private DBHelper mysqldb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +62,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void applyNewInfo(String name, String notes) {
-        mMap.addMarker(new MarkerOptions().position(tempPoint).title(name).snippet(notes));
-        mysqldb.insertMarker(name, notes, tempPoint.latitude, tempPoint.longitude);
+        if(mysqldb.isUniqueName(name)) {
+            mMap.addMarker(new MarkerOptions().position(tempPoint).title(name).snippet(notes));
+            mysqldb.insertMarker(name, notes, tempPoint.latitude, tempPoint.longitude);
+            mMap.clear();
+            mysqldb.getAllMarkers(mMap);
+        }else{
+            Toast.makeText(this,"Cannot have restaurants of same name", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -101,6 +110,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(marker -> {
             openDialog(marker);
             return true;
+        });
+        search = findViewById(R.id.search);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("debugMe", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
         });
         // Prompt the user for permission.
         getLocationPermission();

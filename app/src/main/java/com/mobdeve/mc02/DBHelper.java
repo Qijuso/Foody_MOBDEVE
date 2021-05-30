@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -50,6 +51,12 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(MARKER_TABLE_NAME, MARKER_COLUMN_ID + "=" + id, null);
     }
 
+    public boolean isUniqueName(String string){
+        SQLiteDatabase db = this.getReadableDatabase();
+        @SuppressLint("Recycle") Cursor res = db.rawQuery("SELECT * FROM markers WHERE name = ?", new String[]{string});
+        return !res.moveToFirst();
+    }
+
     public void getAllMarkers(GoogleMap googleMap) {
         Marker marker;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -68,7 +75,6 @@ public class DBHelper extends SQLiteOpenHelper {
                     .title(name)
                     .snippet(notes)
             );
-            assert marker != null;
             marker.setTag(id);
             res.moveToNext();
         }
