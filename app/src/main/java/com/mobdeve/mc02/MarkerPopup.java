@@ -22,9 +22,14 @@ public class MarkerPopup extends AppCompatDialogFragment {
     private final boolean isNew;
     private Marker selectedMarker;
 
-    public MarkerPopup (boolean isNew){this.isNew = isNew;}
-    public MarkerPopup (boolean isNew, Marker marker){this.isNew = isNew; this.selectedMarker = marker;}
+    public MarkerPopup(boolean isNew) {
+        this.isNew = isNew;
+    }
 
+    public MarkerPopup(boolean isNew, Marker marker) {
+        this.isNew = isNew;
+        this.selectedMarker = marker;
+    }
 
     @NonNull
     @Override
@@ -32,19 +37,19 @@ public class MarkerPopup extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = Objects.requireNonNull(getActivity()).getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_markerpopup,null);
+        View view = inflater.inflate(R.layout.layout_markerpopup, null);
         inputTextName = view.findViewById(R.id.textInput_Name);
         inputTextNotes = view.findViewById(R.id.textInput_Notes);
-        if(isNew){
+        if (isNew) {
             builder.setView(view)
                     .setTitle("Marker Information")
                     .setNeutralButton("Cancel", (dialog, which) -> listener.cancelPopup())
                     .setPositiveButton("Save", (dialog, which) -> {
                         String name = inputTextName.getText().toString();
                         String notes = inputTextNotes.getText().toString();
-                        listener.applyNewInfo(name,notes);
+                        listener.applyNewInfo(name, notes);
                     });
-        }else{
+        } else {
             inputTextName.setText(selectedMarker.getTitle());
             inputTextNotes.setText(selectedMarker.getSnippet());
             builder.setView(view)
@@ -54,18 +59,15 @@ public class MarkerPopup extends AppCompatDialogFragment {
                     .setPositiveButton("Save", (dialog, which) -> {
                         String name = inputTextName.getText().toString();
                         String notes = inputTextNotes.getText().toString();
-                        listener.applyEditInfo(name,notes, selectedMarker);
+                        listener.applyEditInfo(name, notes, selectedMarker);
                     });
         }
-
-
         return builder.create();
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         try {
             listener = (MarkerPopupListener) context;
         } catch (ClassCastException e) {
@@ -73,10 +75,13 @@ public class MarkerPopup extends AppCompatDialogFragment {
         }
     }
 
-    public interface MarkerPopupListener{
-        void applyNewInfo (String name, String notes);
-        void applyEditInfo (String name, String notes, Marker marker);
+    public interface MarkerPopupListener {
+        void applyNewInfo(String name, String notes);
+
+        void applyEditInfo(String name, String notes, Marker marker);
+
         void cancelPopup();
+
         void deleteMarker(Marker marker);
     }
 }

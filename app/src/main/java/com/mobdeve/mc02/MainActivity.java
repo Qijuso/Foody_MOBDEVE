@@ -11,7 +11,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,7 +22,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
-
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, MarkerPopup.MarkerPopupListener {
     ConstraintLayout main;
@@ -60,25 +58,32 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void applyNewInfo(String name, String notes) {
         mMap.addMarker(new MarkerOptions().position(tempPoint).title(name).snippet(notes));
     }
+
     @Override
     public void applyEditInfo(String name, String notes, Marker marker) {
         marker.setTitle(name);
         marker.setSnippet(notes);
     }
+
     @Override
-    public void cancelPopup() {}
+    public void cancelPopup() {
+    }
+
     @Override
     public void deleteMarker(Marker marker) {
         marker.remove();
     }
-    public void openDialog(){
+
+    public void openDialog() {
         MarkerPopup popup = new MarkerPopup(true);
         popup.show(getSupportFragmentManager(), "popup");
     }
-    public void openDialog(Marker marker){
+
+    public void openDialog(Marker marker) {
         MarkerPopup popup = new MarkerPopup(false, marker);
         popup.show(getSupportFragmentManager(), "popup");
     }
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.mMap = googleMap;
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
@@ -183,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 lastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
