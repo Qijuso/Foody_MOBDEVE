@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/textInput_Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/restaurant_name"
+        android:inputType="textPersonName"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/textInput_Notes"
+        android:layout_width="match_parent"
+        android:layout_height="226dp"
+        android:layout_below="@id/textInput_Name"
+        android:ems="10"
+        android:hint="@string/notes"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine|textPersonName"
+        android:singleLine="false" />
+
+</RelativeLayout>
