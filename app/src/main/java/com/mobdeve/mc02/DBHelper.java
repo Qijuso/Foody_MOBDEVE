@@ -57,6 +57,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return !res.moveToFirst();
     }
 
+    public LatLng markerPosition(String string){
+        SQLiteDatabase db = this.getReadableDatabase();
+        @SuppressLint("Recycle") Cursor res = db.rawQuery("SELECT * FROM markers WHERE name = ?", new String[]{string});
+        res.moveToFirst();
+        double lat = res.getDouble(res.getColumnIndex("latitude"));
+        double lng = res.getDouble(res.getColumnIndex("longtitude"));
+        return new LatLng(lat,lng);
+    }
+
     public void getAllMarkers(GoogleMap googleMap) {
         Marker marker;
         SQLiteDatabase db = this.getReadableDatabase();

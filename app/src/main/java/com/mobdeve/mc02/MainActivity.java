@@ -116,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d("debugMe", query);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        mysqldb.markerPosition(query), DEFAULT_ZOOM));
                 return false;
             }
 
