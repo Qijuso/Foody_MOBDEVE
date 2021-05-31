@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -61,8 +62,14 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         @SuppressLint("Recycle") Cursor res = db.rawQuery("SELECT * FROM markers WHERE name = ?", new String[]{string});
         res.moveToFirst();
-        double lat = res.getDouble(res.getColumnIndex("latitude"));
-        double lng = res.getDouble(res.getColumnIndex("longtitude"));
+        double lat = 0;
+        double lng = 0;
+        try {
+            lat = res.getDouble(res.getColumnIndex("latitude"));
+            lng = res.getDouble(res.getColumnIndex("longtitude"));
+        } catch (CursorIndexOutOfBoundsException e) {
+            return null;
+        }
         return new LatLng(lat,lng);
     }
 

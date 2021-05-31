@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     SearchView search;
     private DBHelper mysqldb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +63,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void applyNewInfo(String name, String notes) {
-        if(mysqldb.isUniqueName(name)) {
+        if (mysqldb.isUniqueName(name)) {
             mMap.addMarker(new MarkerOptions().position(tempPoint).title(name).snippet(notes));
             mysqldb.insertMarker(name, notes, tempPoint.latitude, tempPoint.longitude);
             mMap.clear();
             mysqldb.getAllMarkers(mMap);
-        }else{
-            Toast.makeText(this,"Cannot have restaurants of same name", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Cannot have restaurants of same name", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void deleteMarker(Marker marker) {
-        mysqldb.deleteMarker((int)marker.getTag());
+        mysqldb.deleteMarker((int) marker.getTag());
         marker.remove();
     }
 
@@ -116,8 +117,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d("debugMe", query);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        mysqldb.markerPosition(query), DEFAULT_ZOOM));
+                LatLng position = mysqldb.markerPosition(query);
+                if(position != null){
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            position, DEFAULT_ZOOM));
+                }else{
+                    Toast.makeText(getApplicationContext(), "No bookmarked restaurants found", Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
 
